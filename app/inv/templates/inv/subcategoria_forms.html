@@ -1,0 +1,61 @@
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+{% if subcategorias %}
+<form method="POST" role ='form' class="form-inline" action="{% url 'editarSubCategoria' subcategorias.id  %}">
+{%else %}
+<form method="POST"  role ='form' class="form-inline" action="{% url 'subcategoryNew'%}">
+{%endif %} 
+
+    {% csrf_token %}
+
+    <div class="col-xl-12 col-md-12 mb-12">
+        {% if subcategorias %}
+        <div class="card border-left-warning shadow h-100 py-2">
+        {% else %}
+        <div class="card border-left-success shadow h-100 py-2">
+        {% endif %}
+            <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        {% if subcategorias %} Editar {% else %} Nueva {% endif %} Subcategoria
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="row">
+                      
+                        <div class="col-5">
+                            <div class="input-group">
+                              
+                                {{ subcategory_form.categoria}}
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="input-group">
+                                
+                                {{ subcategory_form.description }}
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                               
+                                {{ subcategory_form.estado }}
+                            </div>
+                        </div> 
+                        
+                      
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
+                            <button type =button class="btn btn-success" onclick="cerrar_modal()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+</div>
