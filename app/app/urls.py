@@ -19,6 +19,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('main.urls')),
     # path('inv/',include(('inv.urls','inv'),namespace='inv')),
-     path('inv/',include('inv.urls')),
-     path('cmp/',include('cmp.urls'))
+    path('inv/',include('inv.urls')),
+    path('cmp/',include('cmp.urls'))
 ]

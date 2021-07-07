@@ -58,19 +58,20 @@ def editarProveedor(request,id):
 def inactivarProveedor(request,id):
     proveedor=Proveedor.objects.filter(pk=id).first()
     contexto={}
+    template='cmp/inactivar_prv.html'
     if not proveedor:
-        return HttpResponse('Proveedor no exist')
+        return HttpResponse('Proveedor no existe'+ str(id))
 
     if request.method=='GET':
-        contexto={'proveedor_form':proveedor}
+        contexto={'proveedor':proveedor}
     
     if request.method=='POST':
         proveedor.estado = False
         proveedor.save()
-        contexto={'proveedor_form':'OK'}
+        contexto={'proveedor':'OK'}
         return HttpResponse('Proveedor Inactivado')
         
 
-    return render(request,'cmp/inactivar_prv.html',contexto)
+    return render(request,template,contexto)
  
    
