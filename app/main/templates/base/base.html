@@ -24,7 +24,7 @@
     <link href="{% static  'base/vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
 
     <!--jquery confirm-->
-    <link href="{% static  'base/vendor/jquery_confirm/jquery_confirm.mim.css'%}" rel="stylesheet">
+     <link rel="stylesheet" href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css' %}">
 </head>
 
 <body id="page-top" class="bg-gradient-primary">
@@ -58,7 +58,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Opciones de Menu
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -71,14 +71,28 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Cat&aacutelogos de Inventarios:</h6>
+                        {% if perms.inv.view_category %}
                         <a class="collapse-item" href="{% url 'category' %}">Categor&iacutea</a>
+                        {% endif %}
+                        {% if perms.inv.view_subcategory %}
                         <a class="collapse-item" href="{% url 'subcategory' %}">subcategoria</a>
+                        {% endif %}
+                        {% if perms.inv.view_marca %}
                         <a class="collapse-item" href="{% url 'marca_list' %}">Marca</a>
+                        {% endif %}
+                        {% if perms.inv.view_unidadmedida%}
                         <a class="collapse-item" href="{% url 'um_list' %}">unidad de medida</a>
+                        {% endif %}
+                        {% if perms.inv.view_producto %}
                          <a class="collapse-item" href="{% url 'producto_list' %}">Producto</a>
+                         {% endif %}
+                        
                          
                           <h6 class="collapse-header">Cat&aacutelogos de compras:</h6>
+                          
+                        {% if perms.cmp.view_proveedor %}
                           <a class="collapse-item" href="{% url 'proveedor' %}">Proveedores</a>
+                        {% endif %}
                     </div>
                 </div>
             </li>
@@ -112,29 +126,32 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
+                {%if not user.email %}
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
                     aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
+                    
                     <span>Pages</span>
                 </a>
                 <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        {%if not user.email %}
+                        
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="{% url 'login'%}">Login</a>
                         <a class="collapse-item" href="{% url 'register'%}">Register</a>
                         <a class="collapse-item" href="{% url 'forgot-password'%}">Forgot Password</a>
-                        {% endif %}
-                        <div class="collapse-divider"></div>
+                        
+                        {% comment %} <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="{% url '404'%}">404 Page</a>
-                        <a class="collapse-item active" href="blank.html">Blank Page</a>
+                        <a class="collapse-item active" href="blank.html">Blank Page</a> {% endcomment %}
                     </div>
                 </div>
+                {% endif %}
             </li>
 
-            <!-- Nav Item - Charts -->
+            {% comment %} <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
@@ -146,7 +163,7 @@
                 <a class="nav-link" href="{% url 'table' %}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
-            </li>
+            </li> {% endcomment %}
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -415,12 +432,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesion {{user.username}} ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Al dar click en el boton Salir, cerarra sesion para {{user.username}}.</div> .</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="{% url 'logout' %}">Salir</a>
@@ -444,10 +461,7 @@
     <script src="{% static 'base/vendor/datatables/jquery.dataTables.min.js'%}"></script>
     <script src="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
 
-   
-    <script src="{% static 'base/vendor/jquery_confirm/jquery_confirm.mim.js'%}"></script>
-
-    {% block js_page %}{% endblock %}
+   <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
 
     {% block control_modal %}
     <script>
@@ -469,9 +483,32 @@
       $('#popup').modal('hide');
       return false;
     }
-   
+
+    function mensaje(msg,color='green'){
+        if (color=="success"){
+            color="green";
+        }
+        if (color=="error"){
+            color="red";
+        }
+      $.alert({
+        title:'',
+        theme:'material',
+        type:color,
+        content:msg
+      });
+    }
+    {% if messages  %}
+    
+    {% for message in messages  %}
+    console.log("{{ message.tags }}");
+    mensaje("{{ message }}","{{ message.tags }}");
+    {% endfor %}
+    {% endif %}
     </script>
     {% endblock%}
+
+{% block js_page %} {%endblock%}
 </body>
 
 </html>

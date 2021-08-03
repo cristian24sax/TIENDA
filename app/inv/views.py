@@ -1,11 +1,13 @@
   
 from django.shortcuts import  render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from .form import CategoryForm,SubCategoryForm,MarcaForm,UMForm,ProductoForm
 from .models import Category,SubCategory,Marca, UnidadMedida,Producto 
+from django.contrib import messages
 # Create your views here.
 
 @login_required(login_url='login')
+@permission_required('inv.view_category',login_url='SinPrivilegios')
 def categoryview(request):
     categorias =Category.objects.all()
     return render(request,'inv/categoria_list.html',{
@@ -31,13 +33,15 @@ def categoryNew(request):
     })
       
   
-
+@login_required(login_url='login')
 def deletecategory(request,id):
     category=Category.objects.get(pk=id)
     category.delete()
 
     return redirect('category')
 
+
+@login_required(login_url='login')
 def editarCategory(request,id):
     category=Category.objects.get(pk=id)
 
@@ -55,6 +59,7 @@ def editarCategory(request,id):
 
 # views de sub categoria
 @login_required(login_url='login')
+@permission_required('inv.view_subcategory',login_url='SinPrivilegios')
 def Subcategoryview(request):
     subcategorias =SubCategory.objects.all()
     return render(request,'inv/subcategoria_list.html',{
@@ -105,6 +110,7 @@ def editarSubCategory(request,id):
 # view de Marca 
 
 @login_required(login_url='login')
+@permission_required('inv.view_marca',login_url='SinPrivilegios')
 def Marcaview(request):
     marcas =Marca.objects.all()
     return render(request,'inv/marca_list.html',{
@@ -133,6 +139,7 @@ def MarcaNew(request):
 def inactivarMarca(request,id):
     marca=Marca.objects.get(pk=id)
     marca.estado = False
+    messages.success(request,'Marca inactivada')
     marca.save()
     return redirect('marca_list')
 
@@ -159,6 +166,7 @@ def editarMarca(request,id):
 
 #views de Unidad de Medida   
 @login_required(login_url='login')
+@permission_required('inv.view_unidadMedida',login_url='SinPrivilegios')
 def UMview(request):
     um =UnidadMedida.objects.all()
     return render(request,'inv/um_list.html',{

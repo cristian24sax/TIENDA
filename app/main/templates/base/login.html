@@ -22,26 +22,41 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    {% if messages %}
-                                        {% for message in messages  %}
-                                            <div class=" alert  alert-warning ">
-                                                {{message}}
-                                            </div>
-                                    {% endfor %} 
-                                    {%endif%}
+                                             {% if messages %}
+                                                {% for message in messages  %}
+                                                    <div class=" alert  alert-warning ">
+                                                        {{message}}
+                                                    </div>
+                                            {% endfor %} 
+                                            {%endif%} 
+                                    {% if form.errors %}
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    {% for error in field.errors %}
+                                                        {{ error|escape }}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                        
+                                            {% if form.non_field_errors%}
+                                                {% for error in form.non_field_errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                    {% endif %} 
                                     <form class="user" method="POST" action=''>
                                         {% csrf_token %}
-                                         <div class="form-group">
+                                        <div class="form-group">
 
                                             <input type="text" class="form-control form-control-user" name="username"  placeholder ="enter username" id='id_username'/>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                placeholder="Password" name="password">
-                                        </div> 
-                                       
+                                            <div class="form-group">
+                                                <input type="password" class="form-control form-control-user"
+                                                    placeholder="Password" name="password">
+                                            </div> 
+                                        
                                         </div>
-                                       
+                                     
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </button>
@@ -70,3 +85,23 @@
 
 
 {% endblock %}
+{% block js_page %}
+<script>
+  {% if form.errors %}
+      {% for field in form %}
+          {% if field.errors %}
+              {% for error in field.errors %}
+                mensaje('{{ error|escape }}','red');
+              {% endfor %}
+          {% endif %}
+      {% endfor %}
+  
+      {% if form.non_field_errors%}
+          {% for error in form.non_field_errors %}
+            mensaje('{{ error|escape }}','red');
+          {% endfor %}
+      {% endif %}
+  {% endif %}
+</script>
+{% endblock %}
+

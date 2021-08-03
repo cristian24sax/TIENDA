@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
 from main.form import RegisterForm
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 # Create your views here.
@@ -20,6 +19,9 @@ def forgot_password(request):
     return render(request,'base/forgot-password.html')
 
 
+def HomeSinPrivilegios(request):
+
+    return render(request,'base/sin_privilegios.html')
 
 
 
