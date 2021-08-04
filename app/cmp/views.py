@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import Proveedor
+from .models import Proveedor,ComprasDet,ComprasEnc
 from .forms import ProveedorForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 # Create your views here.
 
 @login_required(login_url='login')
@@ -73,5 +73,14 @@ def inactivarProveedor(request,id):
         return HttpResponse('Proveedor Inactivado')
 
     return render(request,template_name,contexto)
- 
-   
+
+# vistas de compras 
+@login_required(login_url='login')
+@permission_required('cmp.view_comprasenc',login_url='SinPrivilegios')
+def Comprasview(request):
+    comprasenc =ComprasEnc.objects.all()
+    return render(request,'cmp/compras_list.html',{
+        
+        'comprasenc':comprasenc
+    
+    })
