@@ -25,6 +25,10 @@
 
     <!--jquery confirm-->
      <link rel="stylesheet" href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css' %}">
+
+    <!-- jquery datetimepicker-->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />  
+
 </head>
 
 <body id="page-top" class="bg-gradient-primary">
@@ -454,6 +458,7 @@
 
     <!-- Core plugin JavaScript-->
     <script src="{% static 'base/vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+    
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'base/js/sb-admin-2.min.js'%}"></script>
@@ -462,6 +467,14 @@
     <script src="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
 
    <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
+
+    <script>
+        $(document).ready(function(){
+            jQuery.datetimepicker.setLocale('es');
+
+        });
+    </script>
 
     {% block control_modal %}
     <script>
