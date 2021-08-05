@@ -10,5 +10,5 @@ urlpatterns = [
     #url compras 
 
     path('compraslist/',views.Comprasview,name='compras_list'),
-    
+    path('compras',views.compras,name='comprasNew'),
 ]
