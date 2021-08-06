@@ -25,6 +25,10 @@
 
     <!--jquery confirm-->
      <link rel="stylesheet" href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css' %}">
+
+    <!-- jquery datetimepicker-->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />  
+
 </head>
 
 <body id="page-top" class="bg-gradient-primary">
@@ -98,23 +102,23 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            {% comment %} <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <i class="fas fa-fw fa-truck"></i>
+                    <span>Movimientos</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <h6 class="collapse-header">Entradas:</h6>
+                        <a class="collapse-item" href="{% url 'compras_list'%}">Compras</a>
+                        {% comment %} <a class="collapse-item" href="utilities-border.html">Borders</a>
                         <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a> {% endcomment %}
                     </div>
                 </div>
-            </li> {% endcomment %}
+            </li> 
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -408,7 +412,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
             </footer>
@@ -454,6 +458,7 @@
 
     <!-- Core plugin JavaScript-->
     <script src="{% static 'base/vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+    
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'base/js/sb-admin-2.min.js'%}"></script>
@@ -462,6 +467,14 @@
     <script src="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
 
    <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
+
+    <script>
+        $(document).ready(function(){
+            jQuery.datetimepicker.setLocale('es');
+
+        });
+    </script>
 
     {% block control_modal %}
     <script>
