@@ -27,18 +27,17 @@
                                     {%else%}
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                                <th> Subcategoria</th>
+                                                <th> id</th>
                                                 <th> Codigo </th>
-                                                <th> Barra</th>
+                                                <th> Codigo de Barras</th>
                                                 <th> Descripcion</th>
+                                                <th> Estado</th>
+                                                <th> Precio </th>
                                                 <th> Stock</th>
-                                                <th> Marca</th>
-                                                <th> Unidad de Medida</th>
-                                               
                                                 <th> Ultima Compra</th>
-                                                
-                                                
-                                                
+                                                <th> Marca</th>
+                                                <th> Subcategoria</th>
+                                                <th> Unidad de Medida</th>
                                         
                                                 <th class="all">Acciones </th>
                                             {% comment %} fields=['codigo','codigo_barra','description','estado','precio','stock','last_buy','marca','subcategory','unidadMedida'] {% endcomment %}
@@ -46,18 +45,17 @@
                                         <tbody>
                                         {% for item in productos %}
                                             <tr>
-                                                <td>{{ item.subcategory}} </td>
+                                                <td>{{ item.id}} </td>
                                                 <td>{{ item.codigo}} </td>
                                                 <td> {{ item.codigo_barra}}</td>
                                                 <td> {{ item.description}}</td>
+                                                <td> {{ item.estado}}</td>
+                                                <td>{{ item.precio}} </td>
                                                 <td> {{ item.stock}}</td>
-                                                <td> {{ item.marca }}</td>
-                                                <td> {{ item.unidadMedida}}</td>
-                                                
                                                 <td> {{ item.created_at|date:"d/m/Y"}}</td>
-                                                 
-                                                
-                                                
+                                                <td> {{ item.marca }}</td> 
+                                                <td>{{ item.subcategory}} </td>
+                                                <td> {{ item.unidadMedida}}</td>
                                               
                                                 <td>
                                                    
