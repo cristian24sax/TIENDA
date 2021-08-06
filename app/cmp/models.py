@@ -1,6 +1,9 @@
 from django.db import models
+#Para los signals
+from django.db.models.signals import post_save,post_delete
+from django.dispatch import receiver
 from main.models import Class_Modelo
-
+from django.db.models import Sum
 from inv.models import Producto
 # Create your models here.
 
@@ -66,3 +69,35 @@ class ComprasDet(Class_Modelo):
     class Meta:
         verbose_name_plural = "Detalles Compras"
         verbose_name="Detalle Compra"
+
+@receiver(post_delete, sender=ComprasDet)
+def detalles_compras_borrar(sender,instance,**kwargs):
+    id_producto=instance.producto.id
+    id_compra=instance.compra.id
+
+    enc= ComprasEnc.objects.filter(pk=id_compra).first()
+    if enc:
+        descuento=ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('descuento'))
+        sub_total=ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('sub_total'))
+        enc.sub_total = sub_total["sub_total__sum"]
+        enc.descuento=descuento["descuento__sum"]
+        enc.save()
+
+    prod=Producto.objects.filter(pk=id_producto).first()
+    if prod:
+        cantidad= int(prod.stock) - int(instance.cantidad)
+        prod.stock=cantidad
+        prod.save()
+
+@receiver(post_save, sender=ComprasDet)
+def detalle_compra_guardar(sender,instance,**kwargs):
+    id_producto = instance.producto.id
+    fecha_compra=instance.compra.fecha_compra
+
+    prod=Producto.objects.filter(pk=id_producto).first()
+    if prod:
+        cantidad = int(prod.stock) + int(instance.cantidad)
+        prod.stock= cantidad
+        prod.last_buy=fecha_compra
+        prod.save()
+

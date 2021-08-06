@@ -157,7 +157,7 @@ def compras(request,compra_id=None):
                 enc.save()
 
         if not compra_id:
-            return redirect("cmp:compras_list")
+            return redirect("compras_list")
         
         producto = request.POST.get("id_id_producto")
         cantidad = request.POST.get("id_cantidad_detalle")
