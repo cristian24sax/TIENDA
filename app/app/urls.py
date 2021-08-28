@@ -20,5 +20,6 @@ urlpatterns = [
     path('',include('main.urls')),
     # path('inv/',include(('inv.urls','inv'),namespace='inv')),
     path('inv/',include('inv.urls')),
-    path('cmp/',include('cmp.urls'))
+    path('cmp/',include('cmp.urls')),
+    path('fac/',include('fac.urls'))
 ]

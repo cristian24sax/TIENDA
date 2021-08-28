@@ -97,6 +97,10 @@
                         {% if perms.cmp.view_proveedor %}
                           <a class="collapse-item" href="{% url 'proveedor' %}">Proveedores</a>
                         {% endif %}
+
+                        {% if perms.cmp.view_cliente %}
+                          <a class="collapse-item" href="{% url 'cliente' %}">Clientes</a>
+                        {% endif %}
                     </div>
                 </div>
             </li>

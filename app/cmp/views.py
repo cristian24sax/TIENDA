@@ -49,8 +49,9 @@ def editarProveedor(request,id):
             form = ProveedorForm(request.POST,instance=producto)
             if form.is_valid():
                 form.save()
+                
                 return redirect('proveedor')
-    
+        
         else:
             form =ProveedorForm(instance=producto)
             return render(request,'cmp/proveedor_form.html',{
